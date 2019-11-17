@@ -1,9 +1,9 @@
 package main
 
-import infrastructure "github.com/GraphQLSample/src/infrastructures"
+import "github.com/GraphQLSample/src/infrastructures"
 
 func main() {
-	infrastructure.Router()
+	infrastructures.Router()
 	// r := gin.Default()
 	// r.GET("/ping", func(c *gin.Context) {
 	// 	c.JSON(200, gin.H{

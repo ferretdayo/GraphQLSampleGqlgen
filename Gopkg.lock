@@ -2,11 +2,12 @@
 
 
 [[projects]]
-  digest = "1:a4b5a6b32f33323c7850fae4ec085a0fbac3be93c057b6b8cef5bcabe24645ac"
+  digest = "1:3ee1d175a75b911a659fbd860060874c4f503e793c5870d13e5a0ede529a63cf"
   name = "github.com/gin-contrib/sse"
   packages = ["."]
   pruneopts = "UT"
-  revision = "5545eab6dad3bbbd6c5ae9186383c2a9d23c0dae"
+  revision = "54d8467d122d380a14768b6b4e5cd7ca4755938f"
+  version = "v0.1.0"
 
 [[projects]]
   digest = "1:d8bd2a337f6ff2188e08f72c614f2f3f0fd48e6a7b37a071b197e427d77d3a47"
@@ -22,12 +23,12 @@
   version = "v1.4.0"
 
 [[projects]]
-  digest = "1:318f1c959a8a740366fce4b1e1eb2fd914036b4af58fbd0a003349b305f118ad"
+  digest = "1:573ca21d3669500ff845bdebee890eb7fc7f0f50c59f2132f2a0c6b03d85086a"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
   pruneopts = "UT"
-  revision = "c823c79ea1570fb5ff454033735a8e68575d1d0f"
-  version = "v1.3.0"
+  revision = "6c65a5562fc06764971b7c5d05c76c75e84bdbf7"
+  version = "v1.3.2"
 
 [[projects]]
   digest = "1:7fbb40f65374cb64a7bf3f1f74e2cb4c4437d93bc3d8921cf7e3d7ad2ab20989"
@@ -58,20 +59,20 @@
   version = "v0.2.3"
 
 [[projects]]
-  digest = "1:f5a2051c55d05548d2d4fd23d244027b59fbd943217df8aa3b5e170ac2fd6e1b"
+  digest = "1:beb5b4f42a25056f0aa291b5eadd21e2f2903a05d15dfe7caf7eaee7e12fa972"
   name = "github.com/json-iterator/go"
   packages = ["."]
   pruneopts = "UT"
-  revision = "0ff49de124c6f76f8494e194af75bde0f1a49a29"
-  version = "v1.1.6"
+  revision = "03217c3e97663914aec3faafde50d081f197a0a2"
+  version = "v1.1.8"
 
 [[projects]]
-  digest = "1:e150b5fafbd7607e2d638e4e5cf43aa4100124e5593385147b0a74e2733d8b0d"
+  digest = "1:d62282425ffb75047679d7e2c3b980eea7f82c05ef5fb9142ee617ebac6e7432"
   name = "github.com/mattn/go-isatty"
   packages = ["."]
   pruneopts = "UT"
-  revision = "c2a7a6ca930a4cd0bc33a3f298eb71960732a3a7"
-  version = "v0.0.7"
+  revision = "88ba11cfdc67c7588b30042edf244b2875f892b6"
+  version = "v0.0.10"
 
 [[projects]]
   digest = "1:33422d238f147d247752996a26574ac48dcf472976eda7f5134015f06bf16563"
@@ -90,20 +91,20 @@
   version = "1.0.1"
 
 [[projects]]
-  digest = "1:d0072748c62defde1ad99dde77f6ffce492a0e5aea9204077e497c7edfb86653"
+  digest = "1:5a1cf4e370bc86137b58da2ae065e76526d32b11f62a7665f36dbd5f41fa95ff"
   name = "github.com/ugorji/go"
   packages = ["codec"]
   pruneopts = "UT"
-  revision = "2adff0894ba3bc2eeb9f9aea45fefd49802e1a13"
-  version = "v1.1.4"
+  revision = "23ab95ef5dc3b70286760af84ce2327a2b64ed62"
+  version = "v1.1.7"
 
 [[projects]]
   branch = "master"
-  digest = "1:ec9d9815894f067c7878330735b9e4dfa6dc61234d2ba136b60a1436d6b5ea94"
+  digest = "1:3b81f20605df873608343956a1f707bc63fe76bbc9ab3adb644ce95b4502a525"
   name = "golang.org/x/sys"
   packages = ["unix"]
   pruneopts = "UT"
-  revision = "b4ddaad3f8a36719f2b8bc6486c14cc468ca2bb5"
+  revision = "b5d5184f72d2900cd61b7676edc45ad9300e26a9"
 
 [[projects]]
   digest = "1:cbc72c4c4886a918d6ab4b95e347ffe259846260f99ebdd8a198c2331cf2b2e9"
@@ -114,12 +115,12 @@
   version = "v8.18.2"
 
 [[projects]]
-  digest = "1:4d2e5a73dc1500038e504a8d78b986630e3626dc027bc030ba5c75da257cdb96"
+  digest = "1:f26a5d382387e03a40d1471dddfba85dfff9bf05352d7e42d37612677c4d3c5c"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
   pruneopts = "UT"
-  revision = "51d6538a90f86fe93ac480b35f37b2be17fef232"
-  version = "v2.2.2"
+  revision = "f90ceb4f409096b60e2e9076b38b304b8246e5fa"
+  version = "v2.2.5"
 
 [solve-meta]
   analyzer-name = "dep"

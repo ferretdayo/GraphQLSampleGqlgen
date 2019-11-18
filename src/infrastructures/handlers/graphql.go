@@ -25,25 +25,15 @@ func NewGraphQL() *GraphQL {
 }
 
 func (graphQl *GraphQL) Handler() gin.HandlerFunc {
-	// fields := graphql.Fields{
-	// 	"UserQuery": &graphql.Field{
-	// 		Name:   "User",graphQl.HobbyQuery.CreateHobbyQuery()
-	// 		Fields: graphQl.UserQuery.CreateUserQuery(),
-	// 	},
-	// 	"HobbyQuery": &graphql.Field{
-	// 		Name:   "Hobby",
-	// 		Fields: ,
-	// 	},
-	// }
+	fields := graphql.Fields{
+		"User":  graphQl.UserQuery.CreateUserQuery(),
+		"Hobby": graphQl.HobbyQuery.CreateHobbyQuery(),
+	}
 	rootQuery := graphql.NewObject(
 		graphql.ObjectConfig{
 			Name:   "Root",
-			Fields: graphQl.UserQuery.CreateUserQuery(),
+			Fields: fields,
 		},
-		// graphql.ObjectConfig{
-		// 	Name:   "Hobby",
-		// 	Fields: graphQl.HobbyQuery.CreateHobbyQuery(),
-		// },
 	)
 	schema, _ := graphql.NewSchema(graphql.SchemaConfig{
 		Query: rootQuery,

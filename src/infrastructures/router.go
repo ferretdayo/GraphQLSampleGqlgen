@@ -1,6 +1,7 @@
 package infrastructures
 
 import (
+	"github.com/GraphQLSample/src/infrastructures/db"
 	handler "github.com/GraphQLSample/src/infrastructures/handlers"
 	"github.com/GraphQLSample/src/interfaces/controllers"
 	"github.com/gin-gonic/gin"
@@ -8,6 +9,8 @@ import (
 
 func Router() {
 	router := gin.Default()
+	db := db.NewMysql()
+	db.Open()
 	graphQl := handler.NewGraphQL()
 	router.GET("/graphql", graphQl.Handler())
 	router.POST("/graphql", graphQl.Handler())

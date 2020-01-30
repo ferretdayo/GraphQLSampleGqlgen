@@ -1,16 +1,16 @@
 package handler
 
 import (
-	"github.com/GraphQLSample/src/usecases"
 	"github.com/GraphQLSample/src/usecases/queries"
+	"github.com/GraphQLSample/src/usecases/users"
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
 )
 
 type GraphQL struct {
-	UserUsecase  *usecases.UserUsecase
-	HobbyUsecase *usecases.HobbyUsecase
+	UserUsecase  *users.UserUsecase
+	HobbyUsecase *users.HobbyUsecase
 	UserQuery    *queries.UserQuery
 	HobbyQuery   *queries.HobbyQuery
 }

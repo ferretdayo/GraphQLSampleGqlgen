@@ -59,6 +59,22 @@
   version = "v0.2.3"
 
 [[projects]]
+  digest = "1:1474777fcd22636dda699562076f083bfc22ca2d2121bdfd3bf21a1ef0239fe7"
+  name = "github.com/jinzhu/gorm"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "79a77d771dee4e4b60e9c543e8663bbc80466670"
+  version = "v1.9.12"
+
+[[projects]]
+  digest = "1:01ed62f8f4f574d8aff1d88caee113700a2b44c42351943fa73cc1808f736a50"
+  name = "github.com/jinzhu/inflection"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "f5c5f50e6090ae76a29240b61ae2a90dd810112e"
+  version = "v1.0.0"
+
+[[projects]]
   digest = "1:beb5b4f42a25056f0aa291b5eadd21e2f2903a05d15dfe7caf7eaee7e12fa972"
   name = "github.com/json-iterator/go"
   packages = ["."]
@@ -129,6 +145,7 @@
     "github.com/gin-gonic/gin",
     "github.com/graphql-go/graphql",
     "github.com/graphql-go/handler",
+    "github.com/jinzhu/gorm",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

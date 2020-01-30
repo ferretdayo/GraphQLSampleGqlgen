@@ -44,3 +44,7 @@
 [[constraint]]
   branch = "master"
   name = "github.com/codegangsta/gin"
+
+[[constraint]]
+  name = "github.com/jinzhu/gorm"
+  version = "1.9.11"

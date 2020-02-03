@@ -1,9 +1,9 @@
 package db
 
-type DataBase struct {
+type Database struct {
 	MainDB *DBTarget
 }
 
-func (database *DataBase) Close() {
+func (database *Database) Close() {
 	database.MainDB.Close()
 }

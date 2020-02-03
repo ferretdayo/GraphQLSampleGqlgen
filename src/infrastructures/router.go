@@ -9,8 +9,8 @@ import (
 
 func Router() {
 	router := gin.Default()
-	db := db.NewMysql()
-	db.Open()
+	mysql := db.NewMysql()
+	db := mysql.Open()
 	graphQl := handler.NewGraphQL()
 	router.GET("/graphql", graphQl.Handler())
 	router.POST("/graphql", graphQl.Handler())
@@ -19,8 +19,7 @@ func Router() {
 			"message": "pong",
 		})
 	})
-	userController := controllers.NewUserController()
-	// router.GET("/users", func(c *gin.Context) { userController.Create(c) })
+	userController := controllers.NewUserController(db)
 	router.GET("/users", func(c *gin.Context) { userController.Create(c) })
 	router.Run() // listen and serve on 0.0.0.0:8080
 }

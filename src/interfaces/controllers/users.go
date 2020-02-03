@@ -3,7 +3,10 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/GraphQLSample/src/infrastructures/db"
+
 	"github.com/GraphQLSample/src/entities"
+	"github.com/GraphQLSample/src/interfaces/repositories"
 	"github.com/GraphQLSample/src/usecases/ports"
 	"github.com/GraphQLSample/src/usecases/users"
 	"github.com/gin-gonic/gin"
@@ -13,9 +16,12 @@ type UserController struct {
 	Usecase *users.UserUsecase
 }
 
-func NewUserController() *UserController {
+func NewUserController(db *db.Database) *UserController {
 	return &UserController{
-		Usecase: &users.UserUsecase{},
+		Usecase: &users.UserUsecase{
+			UserRepository: &repositories.UserRepository{},
+			DB:             db,
+		},
 	}
 }
 
@@ -31,9 +37,9 @@ func (controller *UserController) Create(c *gin.Context) {
 	}
 
 	outputPort := &ports.UserOutputPort{
-		ID:       u.ID,
-		NickName: u.NickName,
-		Old:      u.Old,
+		ID:       u[0].ID,
+		NickName: u[0].NickName,
+		Old:      u[0].Old,
 	}
 	c.JSON(http.StatusOK, outputPort)
 }

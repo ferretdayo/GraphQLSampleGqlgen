@@ -29,7 +29,7 @@ func NewMysql() *Mysql {
 	}
 }
 
-func (mysql *Mysql) Open() *DataBase {
+func (mysql *Mysql) Open() *Database {
 	masterDB, err := gorm.Open("mysql", fmt.Sprintf("%s:%s@(%s:%s)/%s?%s", mysql.User, mysql.Password, mysql.Host, mysql.MasterPort, mysql.Name, mysql.Option))
 	if err != nil {
 		panic(err)
@@ -40,7 +40,7 @@ func (mysql *Mysql) Open() *DataBase {
 		panic(err)
 	}
 
-	return &DataBase{
+	return &Database{
 		MainDB: &DBTarget{
 			Master:      masterDB,
 			ReadReplica: readReplicaDB,

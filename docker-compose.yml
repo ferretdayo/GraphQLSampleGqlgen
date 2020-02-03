@@ -13,5 +13,17 @@ services:
       gin -i run"
     ports:
       - 3001:3001
+    depends_on:
+      - app_db
     environment:
       GO111MODULE: "on"
+  app_db:
+    image: mysql:5.7
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pass
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: app_pass
+    ports:
+      - "3306:3306" 

@@ -1,29 +1,34 @@
 version: '3'
 services:
-  app:
-    image: golang:1.12.5-alpine
-    volumes:
-      - .:/go/src/app
-    command: >
-      sh -c "cd /go/src/app &&
-      apk update &&
-      apk add --no-cache git &&
-      GO111MODULE=off go get -u github.com/codegangsta/gin &&
-      go mod init || : &&
-      gin -i run"
-    ports:
-      - 3001:3001
-    depends_on:
-      - app_db
-    environment:
-      GO111MODULE: "on"
   app_db:
     image: mysql:5.7
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - "./mysql/cnf/my.cnf:/etc/mysql/conf.d/my.cnf"
+      - "./mysql/init:/docker-entrypoint-initdb.d"
     environment:
       MYSQL_ROOT_PASSWORD: root_pass
       MYSQL_DATABASE: app_db
       MYSQL_USER: app_user
       MYSQL_PASSWORD: app_pass
     ports:
-      - "3306:3306" 
+      - "3306:3306"
+  app:
+    build:
+      context: .
+      dockerfile: backend.dockerfile
+    volumes:
+      - .:/go/src/github.com/GraphQLSample
+    ports:
+      - 3001:3001
+    depends_on:
+      - app_db
+    environment:
+      GO111MODULE: "on"
+      DB_USER: app_user
+      DB_PASSWORD: app_pass
+      DB_HOST: app_db
+      DB_NAME: app_db
+      DB_MASTER_PORT: 3306
+      DB_READ_REPLICA_PORT: 3306
+      DB_OPTION: charset=utf8mb4&parseTime=True&loc=Asia%2FTokyo

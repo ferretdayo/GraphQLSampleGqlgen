@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 )
 
@@ -22,7 +23,7 @@ func NewMysql() *Mysql {
 		User:            os.Getenv("DB_USER"),
 		Password:        os.Getenv("DB_PASSWORD"),
 		Host:            os.Getenv("DB_HOST"),
-		Name:            os.Getenv("DB_Name"),
+		Name:            os.Getenv("DB_NAME"),
 		MasterPort:      os.Getenv("DB_MASTER_PORT"),
 		ReadReplicaPort: os.Getenv("DB_READ_REPLICA_PORT"),
 		Option:          os.Getenv("DB_OPTION"),

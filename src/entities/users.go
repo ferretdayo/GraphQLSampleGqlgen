@@ -1,7 +1,10 @@
 package entities
 
+import "time"
+
 type User struct {
-	ID				int
-	NickName	string
-	Old				int
+	ID             uint
+	IsUnsubscribed bool
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
 }

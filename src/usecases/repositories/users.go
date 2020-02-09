@@ -7,4 +7,5 @@ import (
 
 type UserRepository interface {
 	Select(*gorm.DB) ([]entities.User, error)
+	SelectByUserID(*gorm.DB, uint) (*entities.User, error)
 }

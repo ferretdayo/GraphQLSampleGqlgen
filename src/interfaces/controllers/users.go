@@ -2,12 +2,13 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
+
+	"github.com/GraphQLSample/src/usecases/ports"
 
 	"github.com/GraphQLSample/src/infrastructures/db"
 
-	"github.com/GraphQLSample/src/entities"
 	"github.com/GraphQLSample/src/interfaces/repositories"
-	"github.com/GraphQLSample/src/usecases/ports"
 	"github.com/GraphQLSample/src/usecases/users"
 	"github.com/gin-gonic/gin"
 )
@@ -25,21 +26,35 @@ func NewUserController(db *db.Database) *UserController {
 	}
 }
 
-func (controller *UserController) Create(c *gin.Context) {
-	user := entities.User{
-		ID:       1,
-		NickName: "aaa",
-	}
-	c.Bind(&user)
-	u, err := controller.Usecase.GetUser(&user)
+// func (controller *UserController) Create(c *gin.Context) {
+// 	var input ports.UserInputPort
+// 	output, err := controller.Usecase.GetUser(&input)
+// 	if err != nil {
+// 		c.AbortWithError(http.StatusInternalServerError, err)
+// 	}
+
+// 	c.JSON(http.StatusOK, output)
+// }
+
+func (controller *UserController) GetUsers(c *gin.Context) {
+	output, err := controller.Usecase.GetUsers()
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 	}
+	c.JSON(http.StatusOK, output)
+}
 
-	outputPort := &ports.UserOutputPort{
-		ID:       u[0].ID,
-		NickName: u[0].NickName,
-		Old:      u[0].Old,
+func (controller *UserController) GetUser(c *gin.Context) {
+	userID, err := strconv.Atoi(c.Param("user_id"))
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
 	}
-	c.JSON(http.StatusOK, outputPort)
+	input := &ports.UserInputPort{
+		UserID: uint(userID),
+	}
+	output, err := controller.Usecase.GetUser(input)
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
+	c.JSON(http.StatusOK, output)
 }

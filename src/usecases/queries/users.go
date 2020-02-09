@@ -17,11 +17,14 @@ func (userQuery *UserQuery) CreateUserQuery() *graphql.Field {
 				"ID": &graphql.Field{
 					Type: graphql.NewNonNull(graphql.Int),
 				},
-				"NickName": &graphql.Field{
-					Type: graphql.String,
+				"IsUnsubscribed": &graphql.Field{
+					Type: graphql.NewNonNull(graphql.Boolean),
 				},
-				"Old": &graphql.Field{
-					Type: graphql.NewNonNull(graphql.Int),
+				"CreatedAt": &graphql.Field{
+					Type: graphql.NewNonNull(graphql.DateTime),
+				},
+				"UpdatedAt": &graphql.Field{
+					Type: graphql.NewNonNull(graphql.DateTime),
 				},
 			},
 		}),

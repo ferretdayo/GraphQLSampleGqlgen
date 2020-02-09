@@ -42,7 +42,7 @@ func (mysql *Mysql) Open() *Database {
 	}
 
 	return &Database{
-		MainDB: &DBTarget{
+		MainDB: &DatabaseTarget{
 			Master:      masterDB,
 			ReadReplica: readReplicaDB,
 		},

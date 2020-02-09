@@ -1,6 +1,11 @@
 package entities
 
+import "time"
+
 type Hobby struct {
-	ID   int
-	Name string
+	ID        uint
+	Name      string
+	IsDelete  bool
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }

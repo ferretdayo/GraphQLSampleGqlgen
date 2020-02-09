@@ -1,7 +1,7 @@
 package db
 
 type Database struct {
-	MainDB *DBTarget
+	MainDB *DatabaseTarget
 }
 
 func (database *Database) Close() {

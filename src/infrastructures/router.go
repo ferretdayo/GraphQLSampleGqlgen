@@ -23,5 +23,9 @@ func Router() {
 	router.GET("/users", func(c *gin.Context) { userController.GetUsers(c) })
 	router.GET("/users/:user_id", func(c *gin.Context) { userController.GetUser(c) })
 	// router.POST("/users", func(c *gin.Context) { userController.Create(c) })
+
+	hobbyController := controllers.NewHobbyController(db)
+	router.GET("/masters/hobbies", func(c *gin.Context) { hobbyController.GetHobbies(c) })
+
 	router.Run() // listen and serve on 0.0.0.0:8080
 }

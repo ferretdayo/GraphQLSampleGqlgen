@@ -1,25 +1,25 @@
 package handler
 
 import (
+	"github.com/GraphQLSample/src/infrastructures/db"
+	"github.com/GraphQLSample/src/interfaces/repositories"
 	"github.com/GraphQLSample/src/usecases/queries"
-	"github.com/GraphQLSample/src/usecases/users"
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
 )
 
 type GraphQL struct {
-	UserUsecase *users.UserUsecase
-	// HobbyUsecase *users.HobbyUsecase
 	UserQuery *queries.UserQuery
 	// HobbyQuery   *queries.HobbyQuery
 }
 
-func NewGraphQL() *GraphQL {
+func NewGraphQL(db *db.Database) *GraphQL {
 	return &GraphQL{
-		UserUsecase: &users.UserUsecase{},
-		// HobbyUsecase: &usecazes.HobbyUsecase{},
-		UserQuery: &queries.UserQuery{},
+		UserQuery: &queries.UserQuery{
+			UserRepository: &repositories.UserRepository{},
+			DB:             db,
+		},
 		// HobbyQuery:   &queries.HobbyQuery{},
 	}
 }

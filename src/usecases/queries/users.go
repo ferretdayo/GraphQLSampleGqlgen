@@ -3,19 +3,27 @@ package queries
 import (
 	"fmt"
 
+	"github.com/GraphQLSample/src/infrastructures/db"
+	"github.com/GraphQLSample/src/usecases/repositories"
+
 	"github.com/graphql-go/graphql"
 )
 
 type UserQuery struct {
+	UserRepository repositories.UserRepository
+	DB             *db.Database
 }
 
-func (userQuery *UserQuery) CreateUserQuery() *graphql.Field {
+func (query *UserQuery) CreateUserQuery() *graphql.Field {
 	return &graphql.Field{
 		Type: graphql.NewObject(graphql.ObjectConfig{
 			Name: "User",
 			Fields: graphql.Fields{
 				"ID": &graphql.Field{
 					Type: graphql.NewNonNull(graphql.Int),
+				},
+				"DisplayID": &graphql.Field{
+					Type: graphql.NewNonNull(graphql.String),
 				},
 				"IsUnsubscribed": &graphql.Field{
 					Type: graphql.NewNonNull(graphql.Boolean),
@@ -34,19 +42,15 @@ func (userQuery *UserQuery) CreateUserQuery() *graphql.Field {
 			},
 		},
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-			id := p.Args["id"]
-			v, _ := id.(int)
-			fmt.Printf("fetching post with id: %d", v)
-			// u, err := userQuery.Usecase.GetUser(&entities.User{
-			// 	ID:       0,
-			// 	NickName: "AAAAA",
-			// 	Old:      29,
-			// })
-			// if err != nil {
-			// 	return nil, err
-			// }
-			// return u, nil
-			return nil, nil
+			stringUserID := p.Args["id"]
+			userID, _ := stringUserID.(uint)
+			user, err := query.UserRepository.SelectByUserID(query.DB.MainDB.ReadReplica, userID)
+			fmt.Printf("AAAA: %v", user)
+			if err != nil {
+				return nil, err
+			}
+
+			return user, nil
 		},
 	}
 }

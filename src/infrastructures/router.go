@@ -11,7 +11,7 @@ func Router() {
 	router := gin.Default()
 	mysql := db.NewMysql()
 	db := mysql.Open()
-	graphQl := handler.NewGraphQL()
+	graphQl := handler.NewGraphQL(db)
 	router.GET("/graphql", graphQl.Handler())
 	router.POST("/graphql", graphQl.Handler())
 	router.GET("/ping", func(c *gin.Context) {

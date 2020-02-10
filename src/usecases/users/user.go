@@ -20,7 +20,7 @@ type UserUsecase struct {
 
 func (usecase *UserUsecase) CreateUser() (*ports.UserOutputPort, error) {
 	rand.Seed(time.Now().UnixNano())
-	displayID := fmt.Sprintf("%010d\n", rand.Int31n(math.MaxInt32))
+	displayID := fmt.Sprintf("%010d", rand.Int31n(math.MaxInt32))
 
 	user := &entities.User{
 		DisplayID: displayID,
@@ -30,18 +30,28 @@ func (usecase *UserUsecase) CreateUser() (*ports.UserOutputPort, error) {
 	}
 
 	output := &ports.UserOutputPort{
-		ID: user.ID,
+		ID:             user.ID,
+		DisplayID:      user.DisplayID,
+		IsUnsubscribed: user.IsUnsubscribed,
 	}
 	return output, nil
 }
 
-func (usecase *UserUsecase) GetUsers() (*ports.UsersOutputPort, error) {
+func (usecase *UserUsecase) GetUsers() ([]ports.UserOutputPort, error) {
 	users, err := usecase.UserRepository.Select(usecase.DB.MainDB.ReadReplica)
 	if err != nil {
 		return nil, errors.New("something wrong.")
 	}
-	output := &ports.UsersOutputPort{
-		Users: users,
+	var output []ports.UserOutputPort
+	for _, user := range users {
+		output = append(output,
+			ports.UserOutputPort{
+				ID:             user.ID,
+				DisplayID:      user.DisplayID,
+				IsUnsubscribed: user.IsUnsubscribed,
+				CreatedAt:      user.CreatedAt,
+				UpdatedAt:      user.UpdatedAt,
+			})
 	}
 	return output, nil
 }
@@ -54,6 +64,7 @@ func (usecase *UserUsecase) GetUser(input *ports.UserInputPort) (*ports.UserOutp
 
 	outputPort := &ports.UserOutputPort{
 		ID:             user.ID,
+		DisplayID:      user.DisplayID,
 		IsUnsubscribed: user.IsUnsubscribed,
 		CreatedAt:      user.CreatedAt,
 		UpdatedAt:      user.UpdatedAt,

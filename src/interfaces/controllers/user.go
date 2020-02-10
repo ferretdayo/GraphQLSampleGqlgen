@@ -26,15 +26,14 @@ func NewUserController(db *db.Database) *UserController {
 	}
 }
 
-// func (controller *UserController) Create(c *gin.Context) {
-// 	var input ports.UserInputPort
-// 	output, err := controller.Usecase.GetUser(&input)
-// 	if err != nil {
-// 		c.AbortWithError(http.StatusInternalServerError, err)
-// 	}
+func (controller *UserController) Create(c *gin.Context) {
+	output, err := controller.Usecase.CreateUser()
+	if err != nil {
+		c.AbortWithError(http.StatusInternalServerError, err)
+	}
 
-// 	c.JSON(http.StatusOK, output)
-// }
+	c.JSON(http.StatusOK, output)
+}
 
 func (controller *UserController) GetUsers(c *gin.Context) {
 	output, err := controller.Usecase.GetUsers()

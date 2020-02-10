@@ -8,6 +8,10 @@ import (
 type UserRepository struct {
 }
 
+func (repository *UserRepository) Insert(db *gorm.DB, user *entities.User) error {
+	return db.Save(user).Error
+}
+
 func (repository *UserRepository) Select(db *gorm.DB) ([]entities.User, error) {
 	var users []entities.User
 	err := db.Find(&users).Error

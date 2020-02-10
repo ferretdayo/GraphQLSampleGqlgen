@@ -1,6 +1,7 @@
 
 CREATE TABLE `users` (
   `id`              int(10) unsigned  NOT NULL AUTO_INCREMENT,
+  `display_id`      varchar(10)       NOT NULL COMMENT '表示用ID',
   `is_unsubscribed` tinyint(1)        NOT NULL DEFAULT 0 COMMENT '退会フラグ',
   `created_at`      datetime          NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at`      datetime          NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

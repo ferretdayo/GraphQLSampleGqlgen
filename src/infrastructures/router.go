@@ -20,6 +20,7 @@ func Router() {
 		})
 	})
 	userController := controllers.NewUserController(db)
+	router.POST("/users", func(c *gin.Context) { userController.Create(c) })
 	router.GET("/users", func(c *gin.Context) { userController.GetUsers(c) })
 	router.GET("/users/:user_id", func(c *gin.Context) { userController.GetUser(c) })
 	// router.POST("/users", func(c *gin.Context) { userController.Create(c) })

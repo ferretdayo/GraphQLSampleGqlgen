@@ -6,6 +6,7 @@ import (
 )
 
 type UserRepository interface {
+	Insert(*gorm.DB, *entities.User) error
 	Select(*gorm.DB) ([]entities.User, error)
 	SelectByUserID(*gorm.DB, uint) (*entities.User, error)
 }

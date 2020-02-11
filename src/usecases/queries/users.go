@@ -1,8 +1,6 @@
 package queries
 
 import (
-	"fmt"
-
 	"github.com/GraphQLSample/src/infrastructures/db"
 	"github.com/GraphQLSample/src/usecases/repositories"
 
@@ -42,14 +40,11 @@ func (query *UserQuery) CreateUserQuery() *graphql.Field {
 			},
 		},
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-			stringUserID := p.Args["id"]
-			userID, _ := stringUserID.(uint)
-			user, err := query.UserRepository.SelectByUserID(query.DB.MainDB.ReadReplica, userID)
-			fmt.Printf("AAAA: %v", user)
+			userID := p.Args["id"].(int)
+			user, err := query.UserRepository.SelectByUserID(query.DB.MainDB.ReadReplica, uint(userID))
 			if err != nil {
 				return nil, err
 			}
-
 			return user, nil
 		},
 	}

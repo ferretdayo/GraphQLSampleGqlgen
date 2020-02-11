@@ -57,6 +57,9 @@ func (query *UserQuery) CreateUserDetailQuery() *graphql.Field {
 		Type: graphql.NewObject(graphql.ObjectConfig{
 			Name: "Detail",
 			Fields: graphql.Fields{
+				"UserID": &graphql.Field{
+					Type: graphql.NewNonNull(graphql.ID),
+				},
 				"Nickname": &graphql.Field{
 					Type: graphql.NewNonNull(graphql.String),
 				},
@@ -72,45 +75,11 @@ func (query *UserQuery) CreateUserDetailQuery() *graphql.Field {
 		},
 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 			id := p.Args["id"].(int)
-			u, err := query.Usecase.UserRepository.SelectByUserID(query.Usecase.DB.MainDB.ReadReplica, uint(id))
+			userDetail, err := query.Usecase.UserDetailRepository.SelectByUserID(query.Usecase.DB.MainDB.ReadReplica, uint(id))
 			if err != nil {
 				return nil, err
 			}
-			return u, nil
+			return userDetail, nil
 		},
 	}
 }
-
-// func (query *UserQuery) CreateHobbyQuery() *graphql.Field {
-// 	return &graphql.Field{
-// 		Type: graphql.NewObject(graphql.ObjectConfig{
-// 			Name: "Hobby",
-// 			Fields: graphql.Fields{
-// 				"ID": &graphql.Field{
-// 					Type: graphql.NewNonNull(graphql.Int),
-// 				},
-// 				"Name": &graphql.Field{
-// 					Type: graphql.String,
-// 				},
-// 			},
-// 		}),
-// 		Args: graphql.FieldConfigArgument{
-// 			"id": &graphql.ArgumentConfig{
-// 				Type: graphql.NewNonNull(graphql.Int),
-// 			},
-// 		},
-// 		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
-// 			id := p.Args["id"]
-// 			v, _ := id.(int)
-// 			fmt.Printf("fetching post with id: %d", v)
-// 			u, err := query.Usecase.(&entities.Hobby{
-// 				ID:   0,
-// 				Name: "野球",
-// 			})
-// 			if err != nil {
-// 				return nil, err
-// 			}
-// 			return u, nil
-// 		},
-// 	}
-// }

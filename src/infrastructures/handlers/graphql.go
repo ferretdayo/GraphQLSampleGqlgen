@@ -4,6 +4,7 @@ import (
 	"github.com/GraphQLSample/src/infrastructures/db"
 	"github.com/GraphQLSample/src/interfaces/repositories"
 	"github.com/GraphQLSample/src/usecases/queries"
+	"github.com/GraphQLSample/src/usecases/users"
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
@@ -17,8 +18,11 @@ type GraphQL struct {
 func NewGraphQL(db *db.Database) *GraphQL {
 	return &GraphQL{
 		UserQuery: &queries.UserQuery{
-			UserRepository: &repositories.UserRepository{},
-			DB:             db,
+			Usecase: &users.UserUsecase{
+				UserRepository:       &repositories.UserRepository{},
+				UserDetailRepository: &repositories.UserDetailRepository{},
+				DB:                   db,
+			},
 		},
 		// HobbyQuery:   &queries.HobbyQuery{},
 	}

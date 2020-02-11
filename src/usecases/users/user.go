@@ -14,8 +14,9 @@ import (
 )
 
 type UserUsecase struct {
-	UserRepository repositories.UserRepository
-	DB             *db.Database
+	UserRepository       repositories.UserRepository
+	UserDetailRepository repositories.UserDetailRepository
+	DB                   *db.Database
 }
 
 func (usecase *UserUsecase) CreateUser() (*ports.UserOutputPort, error) {

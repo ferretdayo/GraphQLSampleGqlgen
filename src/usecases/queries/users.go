@@ -1,6 +1,9 @@
 package queries
 
 import (
+	"fmt"
+
+	"github.com/GraphQLSample/src/entities"
 	"github.com/GraphQLSample/src/usecases/ports"
 	"github.com/GraphQLSample/src/usecases/users"
 	"github.com/graphql-go/graphql"
@@ -27,6 +30,19 @@ var userType = graphql.NewObject(graphql.ObjectConfig{
 		},
 		"updated_at": &graphql.Field{
 			Type: graphql.NewNonNull(graphql.DateTime),
+		},
+		"hobby": createHobbyQuery(),
+	},
+})
+
+var hobbyType = graphql.NewObject(graphql.ObjectConfig{
+	Name: "Hobby",
+	Fields: graphql.Fields{
+		"id": &graphql.Field{
+			Type: graphql.NewNonNull(graphql.ID),
+		},
+		"name": &graphql.Field{
+			Type: graphql.NewNonNull(graphql.String),
 		},
 	},
 })
@@ -62,6 +78,27 @@ func (query *UserQuery) CreateUserListQuery() *graphql.Field {
 				return nil, err
 			}
 			return users, nil
+		},
+	}
+}
+
+func createHobbyQuery() *graphql.Field {
+	return &graphql.Field{
+		Type: hobbyType,
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			fmt.Printf("p.source: %v\n", p.Source.(*ports.UserOutputPort))
+			// userID := p.Args["id"].(int)
+			// input := &ports.UserInputPort{
+			// 	UserID: uint(userID),
+			// }
+			// user, err := query.Usecase.GetUser(input)
+			// if err != nil {
+			// 	return nil, err
+			// }
+			return entities.Hobby{
+				ID:   1,
+				Name: "野球",
+			}, nil
 		},
 	}
 }

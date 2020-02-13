@@ -30,7 +30,8 @@ func NewGraphQL(db *db.Database) *GraphQL {
 
 func (graphQl *GraphQL) Handler() gin.HandlerFunc {
 	fields := graphql.Fields{
-		"User": graphQl.UserQuery.CreateUserQuery(),
+		"User":     graphQl.UserQuery.CreateUserQuery(),
+		"UserList": graphQl.UserQuery.CreateUserListQuery(),
 		// "Hobby": graphQl.HobbyQuery.CreateHobbyQuery(),
 	}
 	rootQuery := graphql.NewObject(

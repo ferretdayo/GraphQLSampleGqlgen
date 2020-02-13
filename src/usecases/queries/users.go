@@ -10,29 +10,30 @@ type UserQuery struct {
 	Usecase *users.UserUsecase
 }
 
+var userType = graphql.NewObject(graphql.ObjectConfig{
+	Name: "User",
+	Fields: graphql.Fields{
+		"id": &graphql.Field{
+			Type: graphql.NewNonNull(graphql.ID),
+		},
+		"display_id": &graphql.Field{
+			Type: graphql.NewNonNull(graphql.String),
+		},
+		"is_unsubscribed": &graphql.Field{
+			Type: graphql.NewNonNull(graphql.Boolean),
+		},
+		"created_at": &graphql.Field{
+			Type: graphql.NewNonNull(graphql.DateTime),
+		},
+		"updated_at": &graphql.Field{
+			Type: graphql.NewNonNull(graphql.DateTime),
+		},
+	},
+})
+
 func (query *UserQuery) CreateUserQuery() *graphql.Field {
 	return &graphql.Field{
-		Type: graphql.NewObject(graphql.ObjectConfig{
-			Name: "User",
-			Fields: graphql.Fields{
-				"ID": &graphql.Field{
-					Type: graphql.NewNonNull(graphql.ID),
-				},
-				"DisplayID": &graphql.Field{
-					Type: graphql.NewNonNull(graphql.String),
-				},
-				"IsUnsubscribed": &graphql.Field{
-					Type: graphql.NewNonNull(graphql.Boolean),
-				},
-				"CreatedAt": &graphql.Field{
-					Type: graphql.NewNonNull(graphql.DateTime),
-				},
-				"UpdatedAt": &graphql.Field{
-					Type: graphql.NewNonNull(graphql.DateTime),
-				},
-				"Detail": query.CreateUserDetailQuery(),
-			},
-		}),
+		Type: userType,
 		Args: graphql.FieldConfigArgument{
 			"id": &graphql.ArgumentConfig{
 				Type: graphql.NewNonNull(graphql.Int),
@@ -52,7 +53,20 @@ func (query *UserQuery) CreateUserQuery() *graphql.Field {
 	}
 }
 
-func (query *UserQuery) CreateUserDetailQuery() *graphql.Field {
+func (query *UserQuery) CreateUserListQuery() *graphql.Field {
+	return &graphql.Field{
+		Type: graphql.NewList(userType),
+		Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+			users, err := query.Usecase.GetUsers()
+			if err != nil {
+				return nil, err
+			}
+			return users, nil
+		},
+	}
+}
+
+func (query *UserQuery) createUserDetailQuery() *graphql.Field {
 	return &graphql.Field{
 		Type: graphql.NewObject(graphql.ObjectConfig{
 			Name: "Detail",

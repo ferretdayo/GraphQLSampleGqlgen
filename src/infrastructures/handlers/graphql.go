@@ -2,8 +2,8 @@ package handler
 
 import (
 	"github.com/GraphQLSample/src/infrastructures/db"
+	"github.com/GraphQLSample/src/infrastructures/schema"
 	"github.com/GraphQLSample/src/interfaces/repositories"
-	schemas "github.com/GraphQLSample/src/interfaces/schemas/users"
 	resolvers "github.com/GraphQLSample/src/usecases/resolvers/users"
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/graphql"
@@ -21,7 +21,7 @@ func NewGraphQL(db *db.Database) *GraphQL {
 }
 
 func (graphQl *GraphQL) Handler() gin.HandlerFunc {
-	userSchema := schemas.NewUserSchema(&resolvers.UserResolver{
+	userSchema := schema.NewRootSchema(&resolvers.UserResolver{
 		UserRepository:       &repositories.UserRepository{},
 		UserDetailRepository: &repositories.UserDetailRepository{},
 		DB:                   graphQl.DB,

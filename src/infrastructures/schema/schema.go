@@ -1,4 +1,4 @@
-package schemas
+package schema
 
 import (
 	resolvers "github.com/GraphQLSample/src/interfaces/resolvers/users"
@@ -6,17 +6,17 @@ import (
 	"github.com/graphql-go/graphql"
 )
 
-type UserSchema struct {
+type RootSchema struct {
 	UserResolver resolvers.UserResolver
 }
 
-func NewUserSchema(resolver resolvers.UserResolver) *UserSchema {
-	return &UserSchema{
+func NewRootSchema(resolver resolvers.UserResolver) *RootSchema {
+	return &RootSchema{
 		UserResolver: resolver,
 	}
 }
 
-func (schema *UserSchema) Query() *graphql.Object {
+func (schema *RootSchema) Query() *graphql.Object {
 	objectConfig := graphql.ObjectConfig{
 		Name: "Query",
 		Fields: graphql.Fields{

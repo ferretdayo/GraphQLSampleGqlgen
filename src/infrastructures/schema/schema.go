@@ -1,18 +1,21 @@
 package schema
 
 import (
-	resolvers "github.com/GraphQLSample/src/interfaces/resolvers/users"
 	"github.com/GraphQLSample/src/types"
+	"github.com/GraphQLSample/src/usecases/resolvers/masters"
+	"github.com/GraphQLSample/src/usecases/resolvers/users"
 	"github.com/graphql-go/graphql"
 )
 
 type RootSchema struct {
-	UserResolver resolvers.UserResolver
+	UserResolver users.UserResolver
+	HobbyResolver masters.HobbyResolver
 }
 
-func NewRootSchema(resolver resolvers.UserResolver) *RootSchema {
+func NewRootSchema(userResolver users.UserResolver, hobbyResolver masters.HobbyResolver) *RootSchema {
 	return &RootSchema{
-		UserResolver: resolver,
+		UserResolver: userResolver,
+		HobbyResolver: hobbyResolver,
 	}
 }
 
@@ -28,6 +31,14 @@ func (schema *RootSchema) Query() *graphql.Object {
 					},
 				},
 				Resolve: schema.UserResolver.GetUserByID,
+			},
+			"UserList": &graphql.Field{
+				Type: graphql.NewList(types.UserObjectType),
+				Resolve: schema.UserResolver.GetList,
+			},
+			"HobbyList": &graphql.Field{
+				Type: graphql.NewList(types.MasterObjectType),
+				Resolve: schema.HobbyResolver.GetList,
 			},
 		},
 	}

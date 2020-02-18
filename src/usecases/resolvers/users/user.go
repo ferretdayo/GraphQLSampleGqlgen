@@ -1,4 +1,4 @@
-package resolvers
+package users
 
 import (
 	"errors"
@@ -34,4 +34,24 @@ func (resolver *UserResolver) GetUserByID(params graphql.ResolveParams) (interfa
 		UpdatedAt:      user.UpdatedAt,
 	}
 	return outputPort, nil
+}
+
+
+func (resolver *UserResolver) GetList(params graphql.ResolveParams) (interface{}, error) {
+	users, err := resolver.UserRepository.Select(resolver.DB.MainDB.ReadReplica)
+	if err != nil {
+		return nil, errors.New("something wrong.")
+	}
+
+	var output []ports.UserOutputPort
+	for _, user := range users {
+		output = append(output, ports.UserOutputPort{
+			ID:             user.ID,
+			DisplayID:      user.DisplayID,
+			IsUnsubscribed: user.IsUnsubscribed,
+			CreatedAt:      user.CreatedAt,
+			UpdatedAt:      user.UpdatedAt,
+		})
+	}
+	return output, nil
 }

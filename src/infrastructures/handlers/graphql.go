@@ -4,7 +4,8 @@ import (
 	"github.com/GraphQLSample/src/infrastructures/db"
 	"github.com/GraphQLSample/src/infrastructures/schema"
 	"github.com/GraphQLSample/src/interfaces/repositories"
-	resolvers "github.com/GraphQLSample/src/usecases/resolvers/users"
+	"github.com/GraphQLSample/src/usecases/resolvers/masters"
+	 "github.com/GraphQLSample/src/usecases/resolvers/users"
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
@@ -21,11 +22,16 @@ func NewGraphQL(db *db.Database) *GraphQL {
 }
 
 func (graphQl *GraphQL) Handler() gin.HandlerFunc {
-	userSchema := schema.NewRootSchema(&resolvers.UserResolver{
-		UserRepository:       &repositories.UserRepository{},
-		UserDetailRepository: &repositories.UserDetailRepository{},
-		DB:                   graphQl.DB,
-	})
+	userSchema := schema.NewRootSchema(
+		users.UserResolver{
+			UserRepository:       &repositories.UserRepository{},
+			UserDetailRepository: &repositories.UserDetailRepository{},
+			DB:                   graphQl.DB,
+		},
+		masters.HobbyResolver{
+			HobbyRepository:       &repositories.HobbyRepository{},
+			DB:                   graphQl.DB,
+		})
 	schema, _ := graphql.NewSchema(graphql.SchemaConfig{
 		Query: userSchema.Query(),
 	})

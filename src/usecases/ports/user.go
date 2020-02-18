@@ -10,6 +10,7 @@ type UserOutputPort struct {
 	IsUnsubscribed bool      `json:"is_unsubscribed"`
 	CreatedAt      time.Time `json:"created_at"`
 	UpdatedAt      time.Time `json:"updated_at"`
+	Hobby		   *MasterOutputPort `json:"hobby"`
 }
 
 type UserInputPort struct {

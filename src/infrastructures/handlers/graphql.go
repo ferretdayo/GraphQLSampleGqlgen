@@ -2,46 +2,38 @@ package handler
 
 import (
 	"github.com/GraphQLSample/src/infrastructures/db"
+	"github.com/GraphQLSample/src/infrastructures/schema"
 	"github.com/GraphQLSample/src/interfaces/repositories"
-	"github.com/GraphQLSample/src/usecases/queries"
-	"github.com/GraphQLSample/src/usecases/users"
+	"github.com/GraphQLSample/src/usecases/resolvers/masters"
+	 "github.com/GraphQLSample/src/usecases/resolvers/users"
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
 )
 
 type GraphQL struct {
-	UserQuery *queries.UserQuery
-	// HobbyQuery   *queries.HobbyQuery
+	DB *db.Database
 }
 
 func NewGraphQL(db *db.Database) *GraphQL {
 	return &GraphQL{
-		UserQuery: &queries.UserQuery{
-			Usecase: &users.UserUsecase{
-				UserRepository:       &repositories.UserRepository{},
-				UserDetailRepository: &repositories.UserDetailRepository{},
-				DB:                   db,
-			},
-		},
-		// HobbyQuery:   &queries.HobbyQuery{},
+		DB: db,
 	}
 }
 
 func (graphQl *GraphQL) Handler() gin.HandlerFunc {
-	fields := graphql.Fields{
-		"User":     graphQl.UserQuery.CreateUserQuery(),
-		"UserList": graphQl.UserQuery.CreateUserListQuery(),
-		// "Hobby": graphQl.HobbyQuery.CreateHobbyQuery(),
-	}
-	rootQuery := graphql.NewObject(
-		graphql.ObjectConfig{
-			Name:   "Root",
-			Fields: fields,
+	rootSchema := schema.NewRootSchema(
+		users.UserResolver{
+			UserRepository:       &repositories.UserRepository{},
+			UserDetailRepository: &repositories.UserDetailRepository{},
+			DB:                   graphQl.DB,
 		},
-	)
+		masters.HobbyResolver{
+			HobbyRepository:       &repositories.HobbyRepository{},
+			DB:                   graphQl.DB,
+		})
 	schema, _ := graphql.NewSchema(graphql.SchemaConfig{
-		Query: rootQuery,
+		Query: rootSchema.Query(),
 	})
 
 	h := handler.New(&handler.Config{

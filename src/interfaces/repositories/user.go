@@ -20,6 +20,10 @@ func (repository *UserRepository) Select(db *gorm.DB) ([]entities.User, error) {
 
 func (repository *UserRepository) SelectByUserID(db *gorm.DB, userID uint) (*entities.User, error) {
 	var user entities.User
-	err := db.Where("id = ?", userID).First(&user).Error
+	err := db.Model(&user).
+		Where("id = ?", userID).
+		Preload("UserDetail").
+		Preload("UserDetail.Hobby").
+		First(&user).Error
 	return &user, err
 }

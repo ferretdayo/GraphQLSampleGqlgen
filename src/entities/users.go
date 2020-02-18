@@ -8,4 +8,5 @@ type User struct {
 	IsUnsubscribed bool   `gorm:"not null"`
 	CreatedAt      time.Time
 	UpdatedAt      time.Time
+	UserDetail	   UserDetail `gorm:"ForeignKey:ID;AssociationForeignKey:UserID"`
 }

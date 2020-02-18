@@ -7,7 +7,7 @@ type UserDetail struct {
 	Nickname  string    `gorm:"not null"`
 	Birthday  time.Time `gorm:"not null"`
 	HobbyID   uint      `gorm:"not null"`
-	Hobby     Hobby
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	Hobby     Hobby
 }

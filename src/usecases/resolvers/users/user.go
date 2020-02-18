@@ -2,7 +2,6 @@ package users
 
 import (
 	"errors"
-
 	"github.com/GraphQLSample/src/infrastructures/db"
 	"github.com/GraphQLSample/src/usecases/ports"
 	"github.com/GraphQLSample/src/usecases/repositories"
@@ -32,6 +31,10 @@ func (resolver *UserResolver) GetUserByID(params graphql.ResolveParams) (interfa
 		IsUnsubscribed: user.IsUnsubscribed,
 		CreatedAt:      user.CreatedAt,
 		UpdatedAt:      user.UpdatedAt,
+		Hobby:			&ports.MasterOutputPort{
+			ID: user.UserDetail.Hobby.ID,
+			Name: user.UserDetail.Hobby.Name,
+		},
 	}
 	return outputPort, nil
 }

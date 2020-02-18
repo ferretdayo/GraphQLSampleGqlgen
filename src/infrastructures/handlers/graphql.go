@@ -22,7 +22,7 @@ func NewGraphQL(db *db.Database) *GraphQL {
 }
 
 func (graphQl *GraphQL) Handler() gin.HandlerFunc {
-	userSchema := schema.NewRootSchema(
+	rootSchema := schema.NewRootSchema(
 		users.UserResolver{
 			UserRepository:       &repositories.UserRepository{},
 			UserDetailRepository: &repositories.UserDetailRepository{},
@@ -33,7 +33,7 @@ func (graphQl *GraphQL) Handler() gin.HandlerFunc {
 			DB:                   graphQl.DB,
 		})
 	schema, _ := graphql.NewSchema(graphql.SchemaConfig{
-		Query: userSchema.Query(),
+		Query: rootSchema.Query(),
 	})
 
 	h := handler.New(&handler.Config{

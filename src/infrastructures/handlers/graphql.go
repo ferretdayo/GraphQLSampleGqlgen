@@ -5,7 +5,7 @@ import (
 	"github.com/GraphQLSample/src/infrastructures/schema"
 	"github.com/GraphQLSample/src/interfaces/repositories"
 	"github.com/GraphQLSample/src/usecases/resolvers/masters"
-	 "github.com/GraphQLSample/src/usecases/resolvers/users"
+	"github.com/GraphQLSample/src/usecases/resolvers/users"
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"
@@ -29,13 +29,13 @@ func (graphQl *GraphQL) Handler() gin.HandlerFunc {
 			DB:                   graphQl.DB,
 		},
 		masters.HobbyResolver{
-			HobbyRepository:       &repositories.HobbyRepository{},
-			DB:                   graphQl.DB,
+			HobbyRepository: &repositories.HobbyRepository{},
+			DB:              graphQl.DB,
 		})
 	schema, _ := graphql.NewSchema(graphql.SchemaConfig{
-		Query: rootSchema.Query(),
+		Query:    rootSchema.Query(),
+		Mutation: rootSchema.Mutation(),
 	})
-
 	h := handler.New(&handler.Config{
 		Schema:   &schema,
 		Pretty:   true,

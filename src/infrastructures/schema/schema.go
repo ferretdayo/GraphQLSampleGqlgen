@@ -8,13 +8,13 @@ import (
 )
 
 type RootSchema struct {
-	UserResolver users.UserResolver
+	UserResolver  users.UserResolver
 	HobbyResolver masters.HobbyResolver
 }
 
 func NewRootSchema(userResolver users.UserResolver, hobbyResolver masters.HobbyResolver) *RootSchema {
 	return &RootSchema{
-		UserResolver: userResolver,
+		UserResolver:  userResolver,
 		HobbyResolver: hobbyResolver,
 	}
 }
@@ -33,12 +33,25 @@ func (schema *RootSchema) Query() *graphql.Object {
 				Resolve: schema.UserResolver.GetUserByID,
 			},
 			"UserList": &graphql.Field{
-				Type: graphql.NewList(types.UserObjectType),
+				Type:    graphql.NewList(types.UserObjectType),
 				Resolve: schema.UserResolver.GetList,
 			},
 			"HobbyList": &graphql.Field{
-				Type: graphql.NewList(types.MasterObjectType),
+				Type:    graphql.NewList(types.MasterObjectType),
 				Resolve: schema.HobbyResolver.GetList,
+			},
+		},
+	}
+	return graphql.NewObject(objectConfig)
+}
+
+func (schema *RootSchema) Mutation() *graphql.Object {
+	objectConfig := graphql.ObjectConfig{
+		Name: "Mutation",
+		Fields: graphql.Fields{
+			"CreateUser": &graphql.Field{
+				Type:    types.UserObjectType,
+				Resolve: schema.UserResolver.CreateUser,
 			},
 		},
 	}

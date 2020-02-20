@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/GraphQLSample/src/infrastructures"
+	"github.com/GraphQLSampleGqlgen/src/infrastructures"
 )
 
 func main() {

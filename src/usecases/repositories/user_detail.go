@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"github.com/GraphQLSample/src/entities"
+	"github.com/GraphQLSampleGqlgen/src/entities"
 	"github.com/jinzhu/gorm"
 )
 

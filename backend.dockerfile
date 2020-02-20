@@ -6,9 +6,9 @@ RUN apk update \
 
 ENV GO111MODULE=on
 
-WORKDIR /go/src/github.com/GraphQLSample
+WORKDIR /go/src/github.com/GraphQLSampleGqlgen
 
-COPY . /go/src/github.com/GraphQLSample
+COPY . /go/src/github.com/GraphQLSampleGqlgen
 
 RUN go build
 

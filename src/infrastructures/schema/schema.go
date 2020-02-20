@@ -1,9 +1,9 @@
 package schema
 
 import (
-	"github.com/GraphQLSample/src/types"
-	"github.com/GraphQLSample/src/usecases/resolvers/masters"
-	"github.com/GraphQLSample/src/usecases/resolvers/users"
+	"github.com/GraphQLSampleGqlgen/src/types"
+	"github.com/GraphQLSampleGqlgen/src/usecases/masters"
+	"github.com/GraphQLSampleGqlgen/src/usecases/users"
 	"github.com/graphql-go/graphql"
 )
 

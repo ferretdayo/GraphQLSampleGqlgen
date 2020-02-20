@@ -3,21 +3,23 @@ package masters
 import (
 	"errors"
 
-	"github.com/GraphQLSample/src/infrastructures/db"
-	"github.com/GraphQLSample/src/usecases/ports"
-	"github.com/GraphQLSample/src/usecases/repositories"
+	"github.com/GraphQLSampleGqlgen/src/infrastructures/db"
+	"github.com/GraphQLSampleGqlgen/src/usecases/ports"
+	"github.com/GraphQLSampleGqlgen/src/usecases/repositories"
+	"github.com/graphql-go/graphql"
 )
 
-type HobbyUsecase struct {
-	HobbyRepository repositories.HobbyRepository
-	DB              *db.Database
+type HobbyResolver struct {
+	HobbyRepository       repositories.HobbyRepository
+	DB                   *db.Database
 }
 
-func (usecase *HobbyUsecase) GetHobbies() ([]ports.MasterOutputPort, error) {
-	hobbies, err := usecase.HobbyRepository.Select(usecase.DB.MainDB.ReadReplica)
+func (resolver *HobbyResolver) GetList(params graphql.ResolveParams) (interface{}, error) {
+	hobbies, err := resolver.HobbyRepository.Select(resolver.DB.MainDB.ReadReplica)
 	if err != nil {
 		return nil, errors.New("something wrong.")
 	}
+
 	var output []ports.MasterOutputPort
 	for _, hobby := range hobbies {
 		output = append(output, ports.MasterOutputPort{

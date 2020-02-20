@@ -18,7 +18,7 @@ services:
       context: .
       dockerfile: backend.dockerfile
     volumes:
-      - .:/go/src/github.com/GraphQLSample
+      - .:/go/src/github.com/GraphQLSampleGqlgen
     ports:
       - 3001:3001
     depends_on:

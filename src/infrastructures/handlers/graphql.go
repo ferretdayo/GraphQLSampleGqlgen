@@ -1,11 +1,11 @@
 package handler
 
 import (
-	"github.com/GraphQLSample/src/infrastructures/db"
-	"github.com/GraphQLSample/src/infrastructures/schema"
-	"github.com/GraphQLSample/src/interfaces/repositories"
-	"github.com/GraphQLSample/src/usecases/resolvers/masters"
-	"github.com/GraphQLSample/src/usecases/resolvers/users"
+	"github.com/GraphQLSampleGqlgen/src/infrastructures/db"
+	"github.com/GraphQLSampleGqlgen/src/infrastructures/schema"
+	"github.com/GraphQLSampleGqlgen/src/interfaces/repositories"
+	"github.com/GraphQLSampleGqlgen/src/usecases/masters"
+	"github.com/GraphQLSampleGqlgen/src/usecases/users"
 	"github.com/gin-gonic/gin"
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/handler"

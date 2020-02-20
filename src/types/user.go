@@ -2,7 +2,7 @@ package types
 
 import (
 	"errors"
-	"github.com/GraphQLSample/src/usecases/ports"
+	"github.com/GraphQLSampleGqlgen/src/usecases/ports"
 	"github.com/graphql-go/graphql"
 )
 

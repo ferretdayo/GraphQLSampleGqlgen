@@ -1,9 +1,8 @@
 package infrastructures
 
 import (
-	"github.com/GraphQLSample/src/infrastructures/db"
-	handler "github.com/GraphQLSample/src/infrastructures/handlers"
-	"github.com/GraphQLSample/src/interfaces/controllers"
+	"github.com/GraphQLSampleGqlgen/src/infrastructures/db"
+	"github.com/GraphQLSampleGqlgen/src/infrastructures/handlers"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,14 +18,6 @@ func Router() {
 			"message": "pong",
 		})
 	})
-	userController := controllers.NewUserController(db)
-	router.POST("/users", func(c *gin.Context) { userController.Create(c) })
-	router.GET("/users", func(c *gin.Context) { userController.GetUsers(c) })
-	router.GET("/users/:user_id", func(c *gin.Context) { userController.GetUser(c) })
-	// router.POST("/users", func(c *gin.Context) { userController.Create(c) })
-
-	hobbyController := controllers.NewHobbyController(db)
-	router.GET("/masters/hobbies", func(c *gin.Context) { hobbyController.GetHobbies(c) })
 
 	router.Run() // listen and serve on 0.0.0.0:8080
 }

@@ -7,6 +7,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/GraphQLSampleGqlgen/db"
 	"github.com/GraphQLSampleGqlgen/graph"
 	"github.com/GraphQLSampleGqlgen/graph/generated"
 )
@@ -18,6 +19,9 @@ func main() {
 	if port == "" {
 		port = defaultPort
 	}
+
+	mysql := db.NewMysql()
+	db := mysql.Open()
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
 

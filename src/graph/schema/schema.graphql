@@ -1,0 +1,14 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type Query {
+  todos: [Todo!]!
+  users: [User!]!
+}
+
+type Mutation {
+  createTodo(input: NewTodo!): Todo!
+}
+
+scalar Time

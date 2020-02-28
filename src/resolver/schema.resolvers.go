@@ -24,13 +24,16 @@ func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
 	if err != nil {
 		return nil, errors.New("something wrong.")
 	}
-
+	fmt.Printf("user: %v\n", users[0].UserTodos)
 	var output []*model.User
 	for _, user := range users {
 		output = append(output, &model.User{
 			ID:             string(user.ID),
 			DisplayID:      user.DisplayID,
 			IsUnsubscribed: user.IsUnsubscribed,
+			Nickname:       user.UserDetail.Nickname,
+			Birthday:       user.UserDetail.Birthday,
+			// Todos:          user.UserTodos,
 		})
 	}
 	return output, nil

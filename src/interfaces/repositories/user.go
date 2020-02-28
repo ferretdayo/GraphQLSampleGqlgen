@@ -14,7 +14,11 @@ func (repository *UserRepository) Insert(db *gorm.DB, user *entities.User) error
 
 func (repository *UserRepository) Select(db *gorm.DB) ([]entities.User, error) {
 	var users []entities.User
-	err := db.Find(&users).Error
+	err := db.Model(&users).
+		Preload("UserTodos").
+		Preload("UserDetail").
+		Preload("UserDetail.Hobby").
+		Find(&users).Error
 	return users, err
 }
 

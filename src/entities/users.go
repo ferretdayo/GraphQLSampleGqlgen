@@ -8,5 +8,6 @@ type User struct {
 	IsUnsubscribed bool   `gorm:"not null"`
 	CreatedAt      time.Time
 	UpdatedAt      time.Time
-	UserDetail	   UserDetail
+	UserDetail     UserDetail
+	UserTodos      []UserTodo
 }

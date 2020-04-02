@@ -24,12 +24,19 @@ func main() {
 	mysql := db.NewMysql()
 	db := mysql.Open()
 
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolver.Resolver{
-		UserRepository:       &repositories.UserRepository{},
-		UserDetailRepository: &repositories.UserDetailRepository{},
-		HobbyRepository:      &repositories.HobbyRepository{},
-		DB:                   db,
-	}}))
+	srv := handler.NewDefaultServer(
+		generated.NewExecutableSchema(
+			generated.Config{
+				Resolvers: &resolver.Resolver{
+					UserRepository:       &repositories.UserRepository{},
+					UserDetailRepository: &repositories.UserDetailRepository{},
+					UserTodoRepository:   &repositories.UserTodoRepository{},
+					HobbyRepository:      &repositories.HobbyRepository{},
+					DB:                   db,
+				},
+			},
+		),
+	)
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)

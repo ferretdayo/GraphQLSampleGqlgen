@@ -1,6 +1,8 @@
 package entities
 
-import "time"
+import (
+	"time"
+)
 
 type UserTodo struct {
 	ID        uint   `gorm:"primary_key"`
@@ -9,4 +11,5 @@ type UserTodo struct {
 	Done      bool   `gorm:"not null"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	User      User
 }

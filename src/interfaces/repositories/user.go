@@ -26,6 +26,7 @@ func (repository *UserRepository) SelectByUserID(db *gorm.DB, userID uint) (*ent
 	var user entities.User
 	err := db.Model(&user).
 		Where("id = ?", userID).
+		Preload("UserTodos").
 		Preload("UserDetail").
 		Preload("UserDetail.Hobby").
 		First(&user).Error

@@ -11,6 +11,7 @@ import (
 type Resolver struct {
 	UserRepository       repositories.UserRepository
 	UserDetailRepository repositories.UserDetailRepository
+	UserTodoRepository   repositories.UserTodoRepository
 	HobbyRepository      repositories.HobbyRepository
 	DB                   *db.Database
 }

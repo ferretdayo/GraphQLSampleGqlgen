@@ -4,70 +4,31 @@ package resolver
 
 import (
 	"context"
-	"errors"
-	"fmt"
 
-	"github.com/GraphQLSampleGqlgen/src/entities"
 	"github.com/GraphQLSampleGqlgen/src/generated"
 	"github.com/GraphQLSampleGqlgen/src/model"
 )
 
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	userTodo := &entities.UserTodo{
-		UserID: input.UserID,
-		Text:   input.Text,
+	output, uerr := r.Resolver.UserTodoUsecase.CreateUserTodo(input)
+	if uerr != nil {
+		return nil, uerr
 	}
-	if err := r.Resolver.UserTodoRepository.Insert(r.Resolver.DB.MainDB.Master, userTodo); err != nil {
-		return nil, err
-	}
-
-	return &model.Todo{
-		ID:   userTodo.ID,
-		Text: userTodo.Text,
-		Done: userTodo.Done,
-	}, nil
+	return output, nil
 }
 
 func (r *queryResolver) Todos(ctx context.Context, userID uint) ([]*model.Todo, error) {
-	userTodos, err := r.Resolver.UserTodoRepository.SelectByUserID(r.Resolver.DB.MainDB.ReadReplica, userID)
-	if err != nil {
-		return nil, errors.New("something wrong.")
+	output, uerr := r.Resolver.UserTodoUsecase.FindUserTodo(userID)
+	if uerr != nil {
+		return nil, uerr
 	}
-	var output []*model.Todo
-	for _, userTodo := range userTodos {
-		output = append(output, &model.Todo{
-			ID:   userTodo.ID,
-			Text: userTodo.Text,
-			Done: userTodo.Done,
-		})
-	}
-	fmt.Printf("todo: #%v", output)
 	return output, nil
 }
 
 func (r *queryResolver) User(ctx context.Context, id uint) (*model.User, error) {
-	user, err := r.Resolver.UserRepository.SelectByUserID(r.DB.MainDB.ReadReplica, id)
-	if err != nil {
-		return nil, err
-	}
-
-	todos := []*model.Todo{}
-
-	for _, todo := range user.UserTodos {
-		todos = append(todos, &model.Todo{
-			ID:   todo.ID,
-			Text: todo.Text,
-			Done: todo.Done,
-		})
-	}
-
-	output := &model.User{
-		ID:             user.ID,
-		DisplayID:      user.DisplayID,
-		IsUnsubscribed: user.IsUnsubscribed,
-		Nickname:       user.UserDetail.Nickname,
-		Birthday:       user.UserDetail.Birthday,
-		Todos:          todos,
+	output, uerr := r.Resolver.UserUsecase.FindUser(id)
+	if uerr != nil {
+		return nil, uerr
 	}
 	return output, nil
 }

@@ -4,14 +4,10 @@
 package resolver
 
 import (
-	"github.com/GraphQLSampleGqlgen/src/db"
-	"github.com/GraphQLSampleGqlgen/src/usecases/repositories"
+	"github.com/GraphQLSampleGqlgen/src/usecases/users"
 )
 
 type Resolver struct {
-	UserRepository       repositories.UserRepository
-	UserDetailRepository repositories.UserDetailRepository
-	UserTodoRepository   repositories.UserTodoRepository
-	HobbyRepository      repositories.HobbyRepository
-	DB                   *db.Database
+	UserUsecase     *users.UserUsecase
+	UserTodoUsecase *users.UserTodoUsecase
 }

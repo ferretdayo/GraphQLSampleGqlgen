@@ -5,5 +5,5 @@ type Database struct {
 }
 
 func (database *Database) Close() {
-	database.MainDB.Close()
+	database.MainDB.close()
 }

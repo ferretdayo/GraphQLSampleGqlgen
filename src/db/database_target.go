@@ -7,7 +7,7 @@ type DatabaseTarget struct {
 	ReadReplica *gorm.DB
 }
 
-func (databaseTarget *DatabaseTarget) Close() {
+func (databaseTarget *DatabaseTarget) close() {
 	databaseTarget.Master.Close()
 	databaseTarget.ReadReplica.Close()
 }

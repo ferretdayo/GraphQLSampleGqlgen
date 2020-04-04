@@ -1,8 +1,0 @@
-type User {
-  id: ID!
-  displayID: String!
-  isUnsubscribed: Boolean!
-  nickname: String!
-  birthday: Time!
-  todos: [Todo!]!
-}

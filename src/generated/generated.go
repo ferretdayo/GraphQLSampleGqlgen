@@ -277,8 +277,8 @@ scalar Time`, BuiltIn: false},
 }
 
 input NewTodo {
+  userID: ID!
   text: String!
-  userId: String!
 }
 `, BuiltIn: false},
 	&ast.Source{Name: "src/schema/user.graphql", Input: `type User {
@@ -1948,15 +1948,15 @@ func (ec *executionContext) unmarshalInputNewTodo(ctx context.Context, obj inter
 
 	for k, v := range asMap {
 		switch k {
-		case "text":
+		case "userID":
 			var err error
-			it.Text, err = ec.unmarshalNString2string(ctx, v)
+			it.UserID, err = ec.unmarshalNID2uint(ctx, v)
 			if err != nil {
 				return it, err
 			}
-		case "userId":
+		case "text":
 			var err error
-			it.UserID, err = ec.unmarshalNString2string(ctx, v)
+			it.Text, err = ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}

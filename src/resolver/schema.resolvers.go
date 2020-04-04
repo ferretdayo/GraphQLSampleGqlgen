@@ -7,12 +7,25 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/GraphQLSampleGqlgen/src/entities"
 	"github.com/GraphQLSampleGqlgen/src/generated"
 	"github.com/GraphQLSampleGqlgen/src/model"
 )
 
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	panic(fmt.Errorf("not implemented"))
+	userTodo := &entities.UserTodo{
+		UserID: input.UserID,
+		Text:   input.Text,
+	}
+	if err := r.Resolver.UserTodoRepository.Insert(r.Resolver.DB.MainDB.Master, userTodo); err != nil {
+		return nil, err
+	}
+
+	return &model.Todo{
+		ID:   userTodo.ID,
+		Text: userTodo.Text,
+		Done: userTodo.Done,
+	}, nil
 }
 
 func (r *queryResolver) Todos(ctx context.Context, userID uint) ([]*model.Todo, error) {

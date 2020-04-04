@@ -9,7 +9,7 @@ type UserTodoRepository struct {
 }
 
 func (repository *UserTodoRepository) Insert(db *gorm.DB, userTodo *entities.UserTodo) error {
-	return db.Save(userTodo).Error
+	return db.Create(userTodo).Error
 }
 
 func (repository *UserTodoRepository) SelectByUserID(db *gorm.DB, userID uint) ([]entities.UserTodo, error) {

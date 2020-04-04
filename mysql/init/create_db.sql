@@ -39,7 +39,7 @@ CREATE TABLE `user_details` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='ユーザ詳細';
 
 CREATE TABLE `user_todos` (
-  `id`        int(10) unsigned  NOT NULL,
+  `id`        int(10) unsigned  NOT NULL AUTO_INCREMENT,
   `user_id`   int(10) unsigned  NOT NULL,
   `text`      text              NOT NULL COMMENT 'TODOの内容',
   `done`      tinyint(1)        NOT NULL DEFAULT 0 COMMENT '完了済みかどうか',

@@ -7,8 +7,8 @@ import (
 )
 
 type NewTodo struct {
+	UserID uint   `json:"userID"`
 	Text   string `json:"text"`
-	UserID string `json:"userId"`
 }
 
 type Todo struct {

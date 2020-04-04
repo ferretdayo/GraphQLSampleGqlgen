@@ -11,5 +11,4 @@ type UserTodo struct {
 	Done      bool   `gorm:"not null"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	User      User
 }

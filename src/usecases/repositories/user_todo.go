@@ -7,5 +7,5 @@ import (
 
 type UserTodoRepository interface {
 	Insert(*gorm.DB, *entities.UserTodo) error
-	Select(*gorm.DB) ([]entities.UserTodo, error)
+	SelectByUserID(*gorm.DB, uint) ([]entities.UserTodo, error)
 }

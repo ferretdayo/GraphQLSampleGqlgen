@@ -12,10 +12,8 @@ func (repository *UserTodoRepository) Insert(db *gorm.DB, userTodo *entities.Use
 	return db.Save(userTodo).Error
 }
 
-func (repository *UserTodoRepository) Select(db *gorm.DB) ([]entities.UserTodo, error) {
+func (repository *UserTodoRepository) SelectByUserID(db *gorm.DB, userID uint) ([]entities.UserTodo, error) {
 	var userTodos []entities.UserTodo
-	err := db.Find(&userTodos).
-		Preload("User").
-		Preload("User.UserDetail").Error
+	err := db.Find(&userTodos, "user_id = ?", userID).Error
 	return userTodos, err
 }

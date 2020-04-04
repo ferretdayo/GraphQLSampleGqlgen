@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/GraphQLSampleGqlgen/src/usecases/users"
+
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/GraphQLSampleGqlgen/src/db"
@@ -28,11 +30,14 @@ func main() {
 		generated.NewExecutableSchema(
 			generated.Config{
 				Resolvers: &resolver.Resolver{
-					UserRepository:       &repositories.UserRepository{},
-					UserDetailRepository: &repositories.UserDetailRepository{},
-					UserTodoRepository:   &repositories.UserTodoRepository{},
-					HobbyRepository:      &repositories.HobbyRepository{},
-					DB:                   db,
+					UserUsecase: &users.UserUsecase{
+						UserRepository: &repositories.UserRepository{},
+						DB:             db,
+					},
+					UserTodoUsecase: &users.UserTodoUsecase{
+						UserTodoRepository: &repositories.UserTodoRepository{},
+						DB:                 db,
+					},
 				},
 			},
 		),

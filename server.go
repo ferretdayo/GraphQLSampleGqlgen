@@ -7,8 +7,10 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/GraphQLSampleGqlgen/graph"
-	"github.com/GraphQLSampleGqlgen/graph/generated"
+	"github.com/GraphQLSampleGqlgen/src/db"
+	"github.com/GraphQLSampleGqlgen/src/generated"
+	"github.com/GraphQLSampleGqlgen/src/interfaces/repositories"
+	"github.com/GraphQLSampleGqlgen/src/resolver"
 )
 
 const defaultPort = "8080"
@@ -19,7 +21,22 @@ func main() {
 		port = defaultPort
 	}
 
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+	mysql := db.NewMysql()
+	db := mysql.Open()
+
+	srv := handler.NewDefaultServer(
+		generated.NewExecutableSchema(
+			generated.Config{
+				Resolvers: &resolver.Resolver{
+					UserRepository:       &repositories.UserRepository{},
+					UserDetailRepository: &repositories.UserDetailRepository{},
+					UserTodoRepository:   &repositories.UserTodoRepository{},
+					HobbyRepository:      &repositories.HobbyRepository{},
+					DB:                   db,
+				},
+			},
+		),
+	)
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", srv)

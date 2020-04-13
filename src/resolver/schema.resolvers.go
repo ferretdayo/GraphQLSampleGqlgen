@@ -25,8 +25,8 @@ func (r *queryResolver) Todos(ctx context.Context, userID uint) ([]*model.Todo, 
 	return output, nil
 }
 
-func (r *queryResolver) User(ctx context.Context, id uint) (*model.User, error) {
-	output, uerr := r.Resolver.UserUsecase.FindUser(id)
+func (r *queryResolver) User(ctx context.Context, userID uint) (*model.User, error) {
+	output, uerr := r.Resolver.UserUsecase.FindUser(userID)
 	if uerr != nil {
 		return nil, uerr
 	}

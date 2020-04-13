@@ -12,6 +12,14 @@ func (repository *UserRepository) Insert(db *gorm.DB, user *entities.User) error
 	return db.Save(user).Error
 }
 
+func (repository *UserRepository) SelectByTokenID(db *gorm.DB, token string) (*entities.User, error) {
+	var user entities.User
+	err := db.Model(&user).
+		Where("token = ?", token).
+		First(&user).Error
+	return &user, err
+}
+
 func (repository *UserRepository) Select(db *gorm.DB) ([]entities.User, error) {
 	var users []entities.User
 	err := db.Model(&users).

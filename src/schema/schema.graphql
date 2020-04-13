@@ -4,7 +4,7 @@
 
 type Query {
   todos(userID: ID!): [Todo]!
-  user(id: ID!): User!
+  user(userID: ID!): User!
 }
 
 type Mutation {

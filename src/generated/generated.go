@@ -51,7 +51,7 @@ type ComplexityRoot struct {
 
 	Query struct {
 		Todos func(childComplexity int, userID uint) int
-		User  func(childComplexity int, id uint) int
+		User  func(childComplexity int, userID uint) int
 	}
 
 	Todo struct {
@@ -75,7 +75,7 @@ type MutationResolver interface {
 }
 type QueryResolver interface {
 	Todos(ctx context.Context, userID uint) ([]*model.Todo, error)
-	User(ctx context.Context, id uint) (*model.User, error)
+	User(ctx context.Context, userID uint) (*model.User, error)
 }
 
 type executableSchema struct {
@@ -127,7 +127,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.User(childComplexity, args["id"].(uint)), true
+		return e.complexity.Query.User(childComplexity, args["userID"].(uint)), true
 
 	case "Todo.done":
 		if e.complexity.Todo.Done == nil {
@@ -262,7 +262,7 @@ var sources = []*ast.Source{
 
 type Query {
   todos(userID: ID!): [Todo]!
-  user(id: ID!): User!
+  user(userID: ID!): User!
 }
 
 type Mutation {
@@ -343,13 +343,13 @@ func (ec *executionContext) field_Query_user_args(ctx context.Context, rawArgs m
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uint
-	if tmp, ok := rawArgs["id"]; ok {
+	if tmp, ok := rawArgs["userID"]; ok {
 		arg0, err = ec.unmarshalNID2uint(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["id"] = arg0
+	args["userID"] = arg0
 	return args, nil
 }
 
@@ -495,7 +495,7 @@ func (ec *executionContext) _Query_user(ctx context.Context, field graphql.Colle
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().User(rctx, args["id"].(uint))
+		return ec.resolvers.Query().User(rctx, args["userID"].(uint))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
